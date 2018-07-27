@@ -1,10 +1,10 @@
 ## Testing gRPC
  
-The tests in the Hello World example illustrates use of the [ScalaTest](http://www.scalatest.org/) framework. The test coverage is not complete. It only shows how to get started with testing gRPC services. You could add to it as an exercise to increase your own knowledge.
+The tests in the Hello World example illustrates use of the [JUnit](https://junit.org/) framework. The test coverage is not complete. It only shows how to get started with testing gRPC services. You could add to it as an exercise to increase your own knowledge.
  
-Let's look at the test class definition in the `GreeterSpec.scala` source file:
+Let's look at the test class definition in the `GreeterTest.java` source file:
  
-@@snip [GreeterSpec.scala]($g8srctest$/scala/com/example/helloworld/GreeterSpec.scala) { #full-example }
+@@snip [GreeterTest.java]($g8srctest$/java/com/example/helloworld/GreeterTest.java) { #full-example }
 
 Note how we create two `ActorSystem`s, one for the server and another for the client. The test is then using the client
 to verify that it retrieves the expected responses from the server.
@@ -16,7 +16,7 @@ For some testing of the service implementation it might be more appropriate to w
 via the gRPC client. Since the service interface and implementation doesn't require any gRPC intrastructure it can
 be tested without binding it to a HTTP server.
 
-@@snip [GreeterServiceImplSpec.scala]($g8srctest$/scala/com/example/helloworld/GreeterServiceImplSpec.scala) { #full-example }
+@@snip [GreeterServiceImplTest.java]($g8srctest$/java/com/example/helloworld/GreeterServiceImplTest.java) { #full-example }
 
 ### Add streaming tests
 
