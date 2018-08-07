@@ -10,9 +10,9 @@ The Hello World example for Scala is a zipped project that includes a distributi
 
 Download and unzip the example:
 
-1. Download the zip file from [Lightbend Tech Hub](https://developer.lightbend.com/start/?group=akka&project=akka-grpc-quickstart-scala) by clicking `CREATE A PROJECT FOR ME`. 
+1. Download the zip file from [Lightbend Tech Hub](https://developer.lightbend.com/start/?group=akka&project=akka-grpc-quickstart-java) by clicking `CREATE A PROJECT FOR ME`. 
 1. Extract the zip file to a convenient location: 
-  - On Linux and OSX systems, open a terminal and use the command `unzip akka-grpc-quickstart-scala.zip`. Note: On OSX, if you unzip using Archiver, you also have to make the build files executable:
+  - On Linux and OSX systems, open a terminal and use the command `unzip akka-grpc-quickstart-java.zip`. Note: On OSX, if you unzip using Archiver, you also have to make the build files executable:
 
 sbt
 :   ```
@@ -137,9 +137,9 @@ handles gRPC requests in the HTTP/2 with TLS server that is bound to port 8080 i
 @@snip [GreeterServer.java]($g8src$/java/com/example/helloworld/GreeterServer.java) { #import #server }
 
 `GreeterServiceImpl` is our implementation of the gRPC service, but first we must define the interface of the service
-in the protobuf file `src/main/protobuf/helloworld.proto`:
+in the protobuf file `src/main/proto/helloworld.proto`:
 
-@@snip [helloworld.proto]($g8src$/protobuf/helloworld.proto) { #service-request-reply }
+@@snip [helloworld.proto]($g8src$/proto/helloworld.proto) { #service-request-reply }
 
 When compiling the project several things are generated from the proto definition. You can find the generated files in 
 @sbt[`target/scala-2.12/src_managed/main/`]@maven[`target/generated-sources/`]@gradle[`build/generated/source/proto/main/`]

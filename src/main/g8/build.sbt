@@ -1,10 +1,7 @@
-name := "akka-grpc-quickstart-scala"
-
+name := "$name$"
 version := "1.0"
-
-scalaVersion := "2.12.6"
-
-lazy val akkaVersion = "2.5.14" // $akka_version$"
+scalaVersion := "$scala_version$"
+val akkaVersion = "$akka_version$"
 
 enablePlugins(AkkaGrpcPlugin)
 
@@ -14,6 +11,8 @@ akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java)
 enablePlugins(JavaAgent)
 javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.7" % "runtime;test"
 
+resolvers += Resolver.bintrayRepo("akka", "sbt-plugin-releases")
+resolvers += Resolver.bintrayRepo("akka", "maven")
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,

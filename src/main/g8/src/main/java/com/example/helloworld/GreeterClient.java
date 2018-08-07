@@ -26,7 +26,7 @@ class GreeterClient {
     final Materializer materializer = ActorMaterializer.create(sys);
 
     GreeterServiceClient client = GreeterServiceClient.create(
-        GrpcClientSettings.create("helloworld.GreeterService", sys),
+        GrpcClientSettings.fromConfig("helloworld.GreeterService", sys),
         materializer,
         sys.dispatcher()
     );

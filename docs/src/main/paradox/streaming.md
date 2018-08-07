@@ -136,10 +136,10 @@ As you saw in the console output, the example outputs greetings from all clients
 First, the `GreeterServer` main class is the same as explained in the @ref[first example](index.md#server). It binds the 
 `GreeterServiceImpl` to the HTTP server.
 
-We define the interface of the the new call in the protobuf file `src/main/protobuf/helloworld.proto` next to the previous
+We define the interface of the the new call in the protobuf file `src/main/proto/helloworld.proto` next to the previous
 `SayHello` call:
 
-@@snip [helloworld.proto]($g8src$/protobuf/helloworld.proto) { #service-stream }
+@@snip [helloworld.proto]($g8src$/proto/helloworld.proto) { #service-stream }
 
 This method is generated in the `GreeterService` interface and we have to implement it on the server side in `GreeterServiceImpl`:
 

@@ -38,7 +38,7 @@ public class GreeterTest {
     Materializer clientMaterializer = ActorMaterializer.create(clientSystem);
     // the host and TLS certificate config are picked up from the config file
     client = GreeterServiceClient.create(
-        GrpcClientSettings.create("helloworld.GreeterService", clientSystem),
+        GrpcClientSettings.fromConfig("helloworld.GreeterService", clientSystem),
         clientMaterializer,
         clientSystem.dispatcher()
       );
