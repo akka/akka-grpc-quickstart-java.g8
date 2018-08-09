@@ -136,14 +136,14 @@ As you saw in the console output, the example outputs greetings from all clients
 First, the `GreeterServer` main class is the same as explained in the @ref[first example](index.md#server). It binds the 
 `GreeterServiceImpl` to the HTTP server.
 
-We define the interface of the the new call in the protobuf file `src/main/protobuf/helloworld.proto` next to the previous
+We define the interface of the the new call in the protobuf file `src/main/proto/helloworld.proto` next to the previous
 `SayHello` call:
 
-@@snip [helloworld.proto]($g8src$/protobuf/helloworld.proto) { #service-stream }
+@@snip [helloworld.proto]($g8src$/proto/helloworld.proto) { #service-stream }
 
 This method is generated in the `GreeterService` interface and we have to implement it on the server side in `GreeterServiceImpl`:
 
-@@snip [GreeterServiceImpl.scala]($g8src$/scala/com/example/helloworld/GreeterServiceImpl.scala) { #import #service-stream }
+@@snip [GreeterServiceImpl.java]($g8src$/java/com/example/helloworld/GreeterServiceImpl.java) { #import #service-stream }
 
 To connect all input and output streams of all connected clients dynamically we use a [MergeHub](https://doc.akka.io/docs/akka/current/stream/stream-dynamic.html#using-the-mergehub) for the incoming
 messages and a [BroadcastHub](https://doc.akka.io/docs/akka/current/stream/stream-dynamic.html#using-the-broadcasthub) for the outgoing messages.
@@ -153,8 +153,11 @@ If each client was separate it might look like this to have the stream of incomi
 transformed and emitted only to that client:
 
 ```scala
-  override def sayHelloToAll(in: Source[HelloRequest, NotUsed]): Source[HelloReply, NotUsed] = {
-    in.map(request => HelloReply(s"Hello, ${request.name}"))
+  public Source<HelloReply, NotUsed> sayHelloToAll(Source<HelloRequest, NotUsed> in) {
+    return in.map(request ->
+        HelloReply.newBuilder()
+          .setMessage("Hello, " + request.getName())
+          .build());
   }
 ```
 
@@ -162,4 +165,4 @@ transformed and emitted only to that client:
 
 The client is emitting `HelloRequest` once per second and prints the streamed responses:
 
-@@snip [GreeterClient.scala]($g8src$/scala/com/example/helloworld/GreeterClient.scala) { #import #client-stream }
+@@snip [GreeterClient.java]($g8src$/java/com/example/helloworld/GreeterClient.java) { #import #client-stream }

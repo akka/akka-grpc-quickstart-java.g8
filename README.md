@@ -1,4 +1,4 @@
-# Akka gRPC Quickstart with Scala
+# Akka gRPC Quickstart for Java 
 
 ## Quickstart guide
 
@@ -16,7 +16,7 @@ Prerequisites:
 
 Open a console and run the following command to apply this template:
  ```
-sbt new akka/akka-grpc-quickstart-scala.g8
+sbt new akka/akka-grpc-quickstart-java.g8
  ```
 
 This template will prompt for the name of the project. Press `Enter` if the default values suit you.
