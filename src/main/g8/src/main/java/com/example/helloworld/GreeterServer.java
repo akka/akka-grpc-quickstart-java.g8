@@ -4,6 +4,7 @@ package com.example.helloworld;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.*;
 import akka.http.javadsl.model.*;
+import akka.http.javadsl.settings.ServerSettings;
 import akka.japi.Function;
 import akka.stream.ActorMaterializer;
 import akka.stream.Materializer;
@@ -42,6 +43,10 @@ class GreeterServer {
         Http.get(system).bindAndHandleAsync(
           service,
           ConnectHttp.toHost("127.0.0.1", 8080, UseHttp2.always()),
+          ServerSettings.create(system),
+          // Needed due to https://github.com/akka/akka-http/issues/2168
+          256,
+          system.log(),
           materializer
         );
 
