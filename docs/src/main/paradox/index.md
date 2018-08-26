@@ -1,6 +1,6 @@
-# Akka gRPC Quickstart with Scala
+# Akka gRPC Quickstart with Java 
  
-Akka gRPC is a toolkit for building streaming gRPC servers and clients on top of Akka Streams. This guide will get you started building gRPC based systems with Scala. If you prefer to use Akka gRPC with Java, switch to the [Akka gRPC Quickstart with Java guide](https://developer.lightbend.com/guides/akka-grpc-quickstart-java/). 
+Akka gRPC is a toolkit for building streaming gRPC servers and clients on top of Akka Streams. This guide will get you started building gRPC based systems with Java. If you prefer to use Akka gRPC with Scala, switch to the [Akka gRPC Quickstart with Scala guide](https://developer.lightbend.com/guides/akka-grpc-quickstart-scala/). 
 
 After trying this example the [Akka gRPC documentation](https://developer.lightbend.com/docs/akka-grpc/current/index.html) is a good next step to continue learning more about Akka gRPC.
 
@@ -58,7 +58,7 @@ To run Hello World:
 
     Gradle
     :   ```
-        ./gradlew compileScala
+        ./gradlew compileJava
         ```
  
     @sbt[sbt]@maven[Maven]@gradle[Gradle] downloads project dependencies, generates gRPC classes from protobuf, and compiles.
