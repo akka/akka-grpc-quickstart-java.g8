@@ -2,7 +2,7 @@
 
 ## Quickstart guide
 
-This example is described in the [Akka gRPC Quickstart with Scala guide](https://developer.lightbend.com/guides/akka-grpc-quickstart-scala/)
+This example is described in the [Akka gRPC Quickstart with Java guide](https://developer.lightbend.com/guides/akka-grpc-quickstart-java/)
 
 The Hello World example illustrates Akka gRPC basics. Within 30 minutes, you should be able to download and run the example and use this guide to understand how the example is constructed.
 
@@ -21,10 +21,8 @@ sbt new akka/akka-grpc-quickstart-java.g8
 
 This template will prompt for the name of the project. Press `Enter` if the default values suit you.
 
-Once inside the project folder, run the application with:
-```
-sbt run
-```
+Once inside the project folder, follow the [Akka gRPC Quickstart with Java guide](https://developer.lightbend.com/guides/akka-grpc-quickstart-java/) run both the server and the client and also to learn more about how this Hello World project works.
+
 
 ## Template license
 
