@@ -11,8 +11,6 @@ akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java)
 enablePlugins(JavaAgent)
 javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.7" % "runtime;test"
 
-resolvers += Resolver.bintrayRepo("akka", "sbt-plugin-releases")
-resolvers += Resolver.bintrayRepo("akka", "maven")
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,

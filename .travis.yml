@@ -5,6 +5,10 @@ scala:
 jdk:
   - oraclejdk8
 
+# don't seem to work - perhaps due to agent version?
+#  - oraclejdk10
+#  - oraclejdk11
+
 script:
  - sbt test docs/paradox
 
