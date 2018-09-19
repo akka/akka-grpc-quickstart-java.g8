@@ -4,8 +4,10 @@ scala:
 
 jdk:
   - oraclejdk8
-  - oraclejdk10
-  - oraclejdk11
+
+# don't seem to work - perhaps due to agent version?
+#  - oraclejdk10
+#  - oraclejdk11
 
 script:
  - sbt test docs/paradox
