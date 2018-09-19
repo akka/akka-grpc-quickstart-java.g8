@@ -4,6 +4,8 @@ scala:
 
 jdk:
   - oraclejdk8
+  - oraclejdk10
+  - oraclejdk11
 
 script:
  - sbt test docs/paradox
