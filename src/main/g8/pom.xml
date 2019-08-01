@@ -29,6 +29,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <akka.version>$akka_version$</akka.version>
     <akka.grpc.version>$akka_grpc_version$</akka.grpc.version>
+    <jetty.alpn.agent.version>$jetty_alpn_agent_version$</jetty.alpn.agent.version>
     <grpc.version>1.13.1</grpc.version>
     <project.encoding>UTF-8</project.encoding>
   </properties>
@@ -65,7 +66,7 @@
       <groupId>org.mortbay.jetty.alpn</groupId>
       <artifactId>jetty-alpn-agent</artifactId>
       <version>2.0.7</version>
-      <scope>runtime</scope>
+      <scope>\${jetty.alpn.agent.version}$</scope>
     </dependency>
   </dependencies>
   <build>
