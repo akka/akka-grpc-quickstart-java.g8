@@ -36,7 +36,7 @@ public class GreeterServer {
   public static void main(String[] args) throws Exception {
     // important to enable HTTP/2 in ActorSystem's config
     Config conf = ConfigFactory.parseString("akka.http.server.preview.enable-http2 = on")
-      .withFallback(ConfigFactory.defaultApplication());
+      .withFallback(ConfigFactory.load());
     ActorSystem system = ActorSystem.create("HelloWorld", conf);
     new GreeterServer(system).run();
   }
