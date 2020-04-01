@@ -54,7 +54,6 @@ class GreeterServer {
     Function<HttpRequest, CompletionStage<HttpResponse>> service =
         GreeterServiceHandlerFactory.create(
             new GreeterServiceImpl(materializer),
-            materializer,
             system);
 
     CompletionStage<ServerBinding> bound =
