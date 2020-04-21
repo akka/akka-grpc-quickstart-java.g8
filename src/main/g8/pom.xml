@@ -29,6 +29,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <akka.version>$akka_version$</akka.version>
     <akka.grpc.version>$akka_grpc_version$</akka.grpc.version>
+    <scala.binary.version>$scala_major_version$</scala.binary.version>
     <jetty.alpn.agent.version>$jetty_alpn_agent_version$</jetty.alpn.agent.version>
     <grpc.version>1.13.1</grpc.version>
     <project.encoding>UTF-8</project.encoding>
@@ -37,13 +38,13 @@
   <dependencies>
     <dependency>
       <groupId>com.lightbend.akka.grpc</groupId>
-      <artifactId>akka-grpc-runtime_2.12</artifactId>
+      <artifactId>akka-grpc-runtime_\${scala.binary.version}</artifactId>
       <version>\${akka.grpc.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-stream-testkit_2.12</artifactId>
+      <artifactId>akka-stream-testkit_\${scala.binary.version}</artifactId>
       <version>\${akka.version}</version>
       <scope>test</scope>
     </dependency>
