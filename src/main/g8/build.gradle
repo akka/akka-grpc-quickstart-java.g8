@@ -7,7 +7,7 @@ buildscript {
   dependencies {
     // see https://plugins.gradle.org/plugin/com.lightbend.akka.grpc.gradle
     // for the currently latest version.
-    classpath 'gradle.plugin.com.lightbend.akka.grpc:akka-grpc-gradle-plugin:$akka_grpc_version$'
+    classpath 'com.lightbend.akka.grpc:akka-grpc-gradle-plugin:$akka_grpc_version$'
   }
 }
 
@@ -35,6 +35,9 @@ configurations {
 }
 
 dependencies {
+  compile 'com.typesafe.akka:akka-discovery_$scala_major_version$:$akka_version$'
+  compile 'com.typesafe.akka:akka-protobuf_$scala_major_version$:$akka_version$'
+  compile 'com.typesafe.akka:akka-stream_$scala_major_version$:$akka_version$'
 
   testCompile 'junit:junit:4.12'
   testImplementation 'com.typesafe.akka:akka-stream-testkit_$scala_major_version$:$akka_version$'
@@ -65,4 +68,8 @@ task runClient(type: JavaExec) {
   // arguments to pass to the application
   if (project.hasProperty("GreeterClient.user"))
     args  project.getProperty("GreeterClient.user")
+}
+
+application {
+  mainClassName = 'com.example.helloworld.GreeterServer'
 }
