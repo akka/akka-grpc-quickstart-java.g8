@@ -31,7 +31,7 @@
     <akka.grpc.version>$akka_grpc_version$</akka.grpc.version>
     <scala.binary.version>$scala_major_version$</scala.binary.version>
     <jetty.alpn.agent.version>$jetty_alpn_agent_version$</jetty.alpn.agent.version>
-    <grpc.version>1.13.1</grpc.version>
+    <grpc.version>1.28.1</grpc.version>
     <project.encoding>UTF-8</project.encoding>
   </properties>
 
@@ -66,8 +66,8 @@
     <dependency>
       <groupId>org.mortbay.jetty.alpn</groupId>
       <artifactId>jetty-alpn-agent</artifactId>
-      <version>2.0.10</version>
-      <scope>\${jetty.alpn.agent.version}</scope>
+      <version>\${jetty.alpn.agent.version}</version>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
   <build>
