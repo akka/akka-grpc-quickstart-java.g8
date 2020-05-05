@@ -35,12 +35,12 @@ configurations {
 }
 
 dependencies {
-  compile 'com.typesafe.akka:akka-discovery_$scala_major_version$:$akka_version$'
-  compile 'com.typesafe.akka:akka-protobuf_$scala_major_version$:$akka_version$'
-  compile 'com.typesafe.akka:akka-stream_$scala_major_version$:$akka_version$'
+  compile 'com.typesafe.akka:akka-discovery_2.12:$akka_version$'
+  compile 'com.typesafe.akka:akka-protobuf_2.12:$akka_version$'
+  compile 'com.typesafe.akka:akka-stream_2.12:$akka_version$'
 
   testCompile 'junit:junit:4.12'
-  testImplementation 'com.typesafe.akka:akka-stream-testkit_$scala_major_version$:$akka_version$'
+  testImplementation 'com.typesafe.akka:akka-stream-testkit_2.12:$akka_version$'
   testRuntime 'org.pegdown:pegdown:1.1.0'
 
   // Configuration for modules that use Jetty ALPN agent
