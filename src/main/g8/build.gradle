@@ -19,8 +19,8 @@ plugins {
 apply plugin: 'com.lightbend.akka.grpc.gradle'
 
 repositories {
-  mavenLocal()
   mavenCentral()
+  mavenLocal()
 }
 
 akkaGrpc {
