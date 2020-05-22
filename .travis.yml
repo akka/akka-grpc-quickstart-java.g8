@@ -11,8 +11,13 @@ before_install: curl -Ls https://git.io/jabba | bash && . ~/.jabba/jabba.sh
 install: jabba install "$TRAVIS_JDK" && jabba use "$_" && java -Xmx32m -version
 
 script:
- - sbt test docs/paradox
-
+ - sbt docs/paradox
+ # `sbt test` already materializes the template and runs `test` on the materialized code.
+ - sbt test
+ ## set name to "hello-world-grpc" and accept all other defailts (--force)
+ - sbt new file://$PWD --name=hello-world-grpc --force && pushd hello-world-grpc &&  mvn test         && popd || travis_terminate 1
+ - sbt new file://$PWD --name=hello-world-grpc --force && pushd hello-world-grpc &&  ./gradlew build  && popd || travis_terminate 1
+ 
 before_cache:
   - find $HOME/.ivy2 -name "ivydata-*.properties" -print -delete
   - find $HOME/.sbt  -name "*.lock"               -print -delete
