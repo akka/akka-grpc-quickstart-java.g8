@@ -22,3 +22,6 @@ libraryDependencies ++= Seq(
 )
 
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
+
+// TODO remove when Akka gRPC 1.0.0 is final
+resolvers += Resolver.bintrayRepo("akka", "snapshots")
