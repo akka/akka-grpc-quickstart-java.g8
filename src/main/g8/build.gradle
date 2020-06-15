@@ -36,9 +36,9 @@ configurations {
 
 dependencies {
   compile 'com.typesafe.akka:akka-actor-typed_$scala_major_version$:$akka_version$'
+  compile 'com.typesafe.akka:akka-stream_$scala_major_version$:$akka_version$'
   compile 'com.typesafe.akka:akka-discovery_$scala_major_version$:$akka_version$'
   compile 'com.typesafe.akka:akka-protobuf_$scala_major_version$:$akka_version$'
-  compile 'com.typesafe.akka:akka-stream_$scala_major_version$:$akka_version$'
 
   testCompile 'junit:junit:4.12'
   testImplementation 'com.typesafe.akka:akka-actor-testkit-typed_$scala_major_version$:$akka_version$'
