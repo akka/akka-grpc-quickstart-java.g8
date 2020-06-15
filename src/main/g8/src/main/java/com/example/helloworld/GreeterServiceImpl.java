@@ -4,7 +4,7 @@ package com.example.helloworld;
 
 import akka.NotUsed;
 import akka.japi.Pair;
-import akka.stream.Materializer;
+import akka.actor.typed.ActorSystem;
 import akka.stream.javadsl.BroadcastHub;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.MergeHub;
@@ -20,13 +20,14 @@ import java.util.concurrent.CompletionStage;
 //#service-stream
 class GreeterServiceImpl implements GreeterService {
 
-  final Materializer materializer;
+  final ActorSystem<?> system;
+  //#service-request-reply
   final Sink<HelloRequest, NotUsed> inboundHub;
   final Source<HelloReply, NotUsed> outboundHub;
+  //#service-request-reply
 
-  public GreeterServiceImpl(Materializer materializer) {
-    this.materializer = materializer;
-
+  public GreeterServiceImpl(ActorSystem<?> system) {
+    this.system = system;
     //#service-request-reply
     Pair<Sink<HelloRequest, NotUsed>, Source<HelloReply, NotUsed>> hubInAndOut =
       MergeHub.of(HelloRequest.class)
@@ -35,7 +36,7 @@ class GreeterServiceImpl implements GreeterService {
                 .setMessage("Hello, " + request.getName())
                 .build())
         .toMat(BroadcastHub.of(HelloReply.class), Keep.both())
-        .run(materializer);
+        .run(system);
 
     inboundHub = hubInAndOut.first();
     outboundHub = hubInAndOut.second();
@@ -54,7 +55,7 @@ class GreeterServiceImpl implements GreeterService {
   //#service-request-reply
   @Override
   public Source<HelloReply, NotUsed> sayHelloToAll(Source<HelloRequest, NotUsed> in) {
-    in.runWith(inboundHub, materializer);
+    in.runWith(inboundHub, system);
     return outboundHub;
   }
   //#service-request-reply

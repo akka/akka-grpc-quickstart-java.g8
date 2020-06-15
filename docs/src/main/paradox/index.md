@@ -131,7 +131,7 @@ As you saw in the console output, the example outputs several greetings. Let’s
 
 ### Server
 
-First, the `GreeterServer` main class creates an `akka.actor.ActorSystem`, a container in which Actors, Akka Streams and Akka HTTP run. Next, it defines a function from `HttpRequest` to `Future[HttpResponse]` using the `GreeterServiceImpl`. This function
+First, the `GreeterServer` main class creates an `akka.actor.typed.ActorSystem`, a container in which Actors, Akka Streams and Akka HTTP run. Next, it defines a function from `HttpRequest` to `CompletionStage<HttpResponse>` using the `GreeterServiceImpl`. This function
 handles gRPC requests in the HTTP/2 with TLS server that is bound to port 8080 in this example.
 
 @@snip [GreeterServer.java]($g8src$/java/com/example/helloworld/GreeterServer.java) { #import #server }
@@ -177,7 +177,7 @@ Note that clients and servers don't have to be implemented with Akka gRPC. They 
 
 ### Other types of calls
 
-In this first example we saw a gRPC service call for single request returning a `Future` reply.
+In this first example we saw a gRPC service call for single request returning a `CompletionStage` reply.
 The parameter and return type of the calls may also be streams in 3 different combinations:
 
 * **client streaming call** - `Source` (stream) of requests from the client that returns a

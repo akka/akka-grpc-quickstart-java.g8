@@ -2,7 +2,9 @@ package com.example.helloworld;
 
 //#import
 
-import akka.actor.ActorSystem;
+import akka.actor.typed.ActorSystem;
+import akka.actor.typed.javadsl.Adapter;
+import akka.actor.typed.javadsl.Behaviors;
 import akka.http.javadsl.*;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
@@ -37,31 +39,31 @@ public class GreeterServer {
     // important to enable HTTP/2 in ActorSystem's config
     Config conf = ConfigFactory.parseString("akka.http.server.preview.enable-http2 = on")
       .withFallback(ConfigFactory.load());
-    ActorSystem system = ActorSystem.create("HelloWorld", conf);
+    ActorSystem<Void> system = ActorSystem.create(Behaviors.empty(),"HelloWorld", conf);
     new GreeterServer(system).run();
   }
 
-  final ActorSystem system;
+  final ActorSystem<?> system;
 
-  public GreeterServer(ActorSystem system) {
+  public GreeterServer(ActorSystem<?> system) {
     this.system = system;
   }
 
   public CompletionStage<ServerBinding> run() throws Exception {
 
-    Materializer materializer = ActorMaterializer.create(system);
-
     Function<HttpRequest, CompletionStage<HttpResponse>> service =
         GreeterServiceHandlerFactory.create(
-            new GreeterServiceImpl(materializer),
+            new GreeterServiceImpl(system),
             system);
 
     CompletionStage<ServerBinding> bound =
-        Http.get(system).bindAndHandleAsync(
+        // The `Adapter` allows to pass the `typed.ActorSystem` to Akka HTTP
+        // which does not accept the new actors API yet
+        Http.get(Adapter.toClassic(system)).bindAndHandleAsync(
           service,
           ConnectWithHttps.toHostHttps("127.0.0.1", 8080)
               .withCustomHttpsContext(serverHttpContext()),
-          materializer
+          Adapter.toClassic(system)
         );
 
     bound.thenAccept(binding ->

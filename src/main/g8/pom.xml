@@ -44,6 +44,25 @@
 
     <dependency>
       <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-actor-typed_\${scala.binary.version}</artifactId>
+      <version>\${akka.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-discovery_\${scala.binary.version}</artifactId>
+      <version>\${akka.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-actor-testkit-typed_\${scala.binary.version}</artifactId>
+      <version>\${akka.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
       <artifactId>akka-stream-testkit_\${scala.binary.version}</artifactId>
       <version>\${akka.version}</version>
       <scope>test</scope>
@@ -72,20 +91,6 @@
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>net.alchim31.maven</groupId>
-        <artifactId>scala-maven-plugin</artifactId>
-        <version>3.4.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-              <goal>testCompile</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
       <plugin>
         <groupId>com.lightbend.akka.grpc</groupId>
         <artifactId>akka-grpc-maven-plugin</artifactId>
