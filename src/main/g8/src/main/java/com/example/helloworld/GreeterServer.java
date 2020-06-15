@@ -9,8 +9,7 @@ import akka.http.javadsl.*;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.japi.Function;
-import akka.stream.ActorMaterializer;
-import akka.stream.Materializer;
+import akka.stream.SystemMaterializer;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -39,7 +38,7 @@ public class GreeterServer {
     // important to enable HTTP/2 in ActorSystem's config
     Config conf = ConfigFactory.parseString("akka.http.server.preview.enable-http2 = on")
       .withFallback(ConfigFactory.load());
-    ActorSystem<Void> system = ActorSystem.create(Behaviors.empty(),"HelloWorld", conf);
+    ActorSystem<Void> system = ActorSystem.create(Behaviors.empty(), "GreeterServer", conf);
     new GreeterServer(system).run();
   }
 
@@ -63,7 +62,7 @@ public class GreeterServer {
           service,
           ConnectWithHttps.toHostHttps("127.0.0.1", 8080)
               .withCustomHttpsContext(serverHttpContext()),
-          Adapter.toClassic(system)
+          SystemMaterializer.get(system).materializer()
         );
 
     bound.thenAccept(binding ->

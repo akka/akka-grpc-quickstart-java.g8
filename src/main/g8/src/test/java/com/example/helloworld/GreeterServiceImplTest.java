@@ -1,10 +1,8 @@
 // #full-example
 package com.example.helloworld;
 
-import akka.actor.ActorSystem;
-import akka.stream.ActorMaterializer;
-import akka.stream.Materializer;
-import akka.testkit.javadsl.TestKit;
+import akka.actor.testkit.typed.javadsl.ActorTestKit;
+import akka.actor.typed.ActorSystem;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,22 +13,20 @@ import static org.junit.Assert.assertEquals;
 
 public class GreeterServiceImplTest {
 
-  private static ActorSystem system;
-  private static Materializer materializer;
+  private static final ActorTestKit testKit = ActorTestKit.create();
+
+  private static ActorSystem<?> system = testKit.system();
   private static GreeterService service;
 
   @BeforeClass
   public static void setup() {
-    system = ActorSystem.create();
-    materializer = ActorMaterializer.create(system);
-    service = new GreeterServiceImpl(materializer);
+    service = new GreeterServiceImpl(system);
   }
 
   @AfterClass
   public static void teardown() {
-    TestKit.shutdownActorSystem(system);
+    testKit.shutdownTestKit();
     system = null;
-    materializer = null;
   }
 
   @Test
