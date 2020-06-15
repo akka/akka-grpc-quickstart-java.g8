@@ -30,9 +30,9 @@
     </pluginRepository>
     <!-- TODO remove when Akka gRPC 1.0.0 is final -->
     <pluginRepository>
-      <id>bintray-akka-snapshopts</id>
+      <id>bintray-akka-snapshots</id>
       <name>bintray</name>
-      <url>https://dl.bintray.com/akka/snspshots</url>
+      <url>https://dl.bintray.com/akka/snapshots</url>
     </pluginRepository>
   </pluginRepositories>
 
