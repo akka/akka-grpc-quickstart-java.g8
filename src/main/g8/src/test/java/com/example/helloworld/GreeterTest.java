@@ -3,13 +3,13 @@ package com.example.helloworld;
 
 import akka.actor.testkit.typed.javadsl.ActorTestKit;
 import akka.actor.typed.ActorSystem;
-import akka.actor.typed.javadsl.Adapter;
 import akka.actor.typed.javadsl.Behaviors;
 import akka.grpc.GrpcClientSettings;
 import akka.http.javadsl.ServerBinding;
-import akka.testkit.javadsl.TestKit;
+
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class GreeterTest {
 
   @AfterClass
   public static void teardown() {
-    TestKit.shutdownActorSystem(Adapter.toClassic(clientSystem));
+    ActorTestKit.shutdown(clientSystem);
     testKit.shutdownTestKit();
     serverSystem = null;
     client = null;
