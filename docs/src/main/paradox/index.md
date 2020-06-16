@@ -142,7 +142,7 @@ in the protobuf file `src/main/proto/helloworld.proto`:
 @@snip [helloworld.proto]($g8src$/proto/helloworld.proto) { #service-request-reply }
 
 When compiling the project several things are generated from the proto definition. You can find the generated files in 
-@sbt[`target/scala-2.12/src_managed/main/`]@maven[`target/generated-sources/`]@gradle[`build/generated/source/proto/main/`]
+@sbt[`target/scala-2.13/src_managed/main/`]@maven[`target/generated-sources/`]@gradle[`build/generated/source/proto/main/`]
 if you are curious.
 
 For the server the following classes are generated:

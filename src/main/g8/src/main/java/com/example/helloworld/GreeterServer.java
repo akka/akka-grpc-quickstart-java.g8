@@ -56,8 +56,7 @@ public class GreeterServer {
             system);
 
     CompletionStage<ServerBinding> bound =
-        // The `Adapter` allows to pass the `typed.ActorSystem` to Akka HTTP
-        // which does not accept the new actors API yet
+        // Akka HTTP 10.1 requires adapters to accept the new actors APIs
         Http.get(Adapter.toClassic(system)).bindAndHandleAsync(
           service,
           ConnectWithHttps.toHostHttps("127.0.0.1", 8080)
@@ -106,7 +105,6 @@ public class GreeterServer {
   }
 
   private static String read(InputStream in) throws IOException {
-    // val bytes: Array[Byte] = {
     ByteArrayOutputStream baos = new ByteArrayOutputStream(Math.max(64, in.available()));
     byte[] buffer = new byte[32 * 1024];
 

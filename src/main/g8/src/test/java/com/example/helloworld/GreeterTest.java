@@ -2,6 +2,7 @@
 package com.example.helloworld;
 
 import akka.actor.testkit.typed.javadsl.ActorTestKit;
+import akka.actor.testkit.typed.javadsl.TestKitJunitResource;
 import akka.actor.typed.ActorSystem;
 import akka.actor.typed.javadsl.Behaviors;
 import akka.grpc.GrpcClientSettings;
@@ -12,6 +13,7 @@ import com.typesafe.config.ConfigFactory;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 import java.util.concurrent.CompletionStage;
@@ -25,7 +27,9 @@ public class GreeterTest {
   private static final Config config = ConfigFactory
           .parseString("akka.http.server.preview.enable-http2 = on")
           .withFallback(ConfigFactory.defaultApplication());
-  private static final ActorTestKit testKit = ActorTestKit.create(config);
+
+  @ClassRule
+  public static final TestKitJunitResource testKit = new TestKitJunitResource(config);
 
   private static ActorSystem<?> serverSystem = testKit.system();
   private static ActorSystem<?> clientSystem;
@@ -48,8 +52,6 @@ public class GreeterTest {
   @AfterClass
   public static void teardown() {
     ActorTestKit.shutdown(clientSystem);
-    testKit.shutdownTestKit();
-    serverSystem = null;
     client = null;
   }
 

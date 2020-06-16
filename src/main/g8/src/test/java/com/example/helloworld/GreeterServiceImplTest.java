@@ -2,9 +2,12 @@
 package com.example.helloworld;
 
 import akka.actor.testkit.typed.javadsl.ActorTestKit;
+import akka.actor.testkit.typed.javadsl.TestKitJunitResource;
 import akka.actor.typed.ActorSystem;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -13,7 +16,8 @@ import static org.junit.Assert.assertEquals;
 
 public class GreeterServiceImplTest {
 
-  private static final ActorTestKit testKit = ActorTestKit.create();
+  @ClassRule
+  public static final TestKitJunitResource testKit = new TestKitJunitResource();
 
   private static ActorSystem<?> system = testKit.system();
   private static GreeterService service;
@@ -21,12 +25,6 @@ public class GreeterServiceImplTest {
   @BeforeClass
   public static void setup() {
     service = new GreeterServiceImpl(system);
-  }
-
-  @AfterClass
-  public static void teardown() {
-    testKit.shutdownTestKit();
-    system = null;
   }
 
   @Test
