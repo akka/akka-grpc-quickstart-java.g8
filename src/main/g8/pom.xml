@@ -42,7 +42,7 @@
     <akka.version>$akka_version$</akka.version>
     <akka.grpc.version>1.0.0-M1+35-c8aa943b</akka.grpc.version>
 <!--    <akka.grpc.version>$akka_grpc_version$</akka.grpc.version>-->
-    <scala.binary.version>$scala_major_version$</scala.binary.version>
+    <scala.binary.version>2.13</scala.binary.version>
     <grpc.version>1.28.1</grpc.version>
     <project.encoding>UTF-8</project.encoding>
   </properties>
