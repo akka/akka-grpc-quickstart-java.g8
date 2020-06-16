@@ -43,7 +43,6 @@
     <akka.grpc.version>1.0.0-M1+35-c8aa943b</akka.grpc.version>
 <!--    <akka.grpc.version>$akka_grpc_version$</akka.grpc.version>-->
     <scala.binary.version>$scala_major_version$</scala.binary.version>
-    <jetty.alpn.agent.version>$jetty_alpn_agent_version$</jetty.alpn.agent.version>
     <grpc.version>1.28.1</grpc.version>
     <project.encoding>UTF-8</project.encoding>
   </properties>
@@ -90,7 +89,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>4.13</version>
       <scope>test</scope>
     </dependency>
 
@@ -101,12 +100,6 @@
       <version>\${grpc.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.mortbay.jetty.alpn</groupId>
-      <artifactId>jetty-alpn-agent</artifactId>
-      <version>\${jetty.alpn.agent.version}</version>
-      <scope>runtime</scope>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -129,9 +122,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.7</version>
-        <configuration>
-          <argLine>-javaagent:\${org.mortbay.jetty.alpn:jetty-alpn-agent:jar}</argLine>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -161,7 +151,6 @@
             <configuration>
               <executable>java</executable>
               <arguments>
-                <argument>-javaagent:\${org.mortbay.jetty.alpn:jetty-alpn-agent:jar}</argument>
                 <argument>-classpath</argument>
                 <classpath />
                 <argument>com.example.helloworld.GreeterServer</argument>

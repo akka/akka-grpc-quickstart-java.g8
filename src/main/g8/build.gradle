@@ -39,11 +39,6 @@ akkaGrpc {
   generateServer = true
 }
 
-// Define a separate configuration for managing the dependency on Jetty ALPN agent.
-configurations {
-  alpnagent
-}
-
 dependencies {
   implementation 'com.typesafe.akka:akka-actor-typed_$scala_major_version$:$akka_version$'
   implementation 'com.typesafe.akka:akka-stream_$scala_major_version$:$akka_version$'
@@ -53,21 +48,12 @@ dependencies {
   testImplementation 'junit:junit:4.13'
   testImplementation 'com.typesafe.akka:akka-actor-testkit-typed_$scala_major_version$:$akka_version$'
   testImplementation 'com.typesafe.akka:akka-stream-testkit_$scala_major_version$:$akka_version$'
-
-  // Configuration for modules that use Jetty ALPN agent
-  alpnagent 'org.mortbay.jetty.alpn:jetty-alpn-agent:$jetty_alpn_agent_version$'
-}
-
-test {
-  jvmArgs "-javaagent:" + configurations.alpnagent.asPath
 }
 
 task runServer(type: JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
 
   main = 'com.example.helloworld.GreeterServer'
-
-  jvmArgs "-javaagent:" + configurations.alpnagent.asPath
 }
 
 
