@@ -2,12 +2,18 @@ buildscript {
   repositories {
     mavenLocal()
     gradlePluginPortal()
+    // TODO remove when Akka gRPC 1.0.0 is final
+    maven {
+      url "https://dl.bintray.com/akka/snapshots/"
+    }
   }
 
   dependencies {
     // see https://plugins.gradle.org/plugin/com.lightbend.akka.grpc.gradle
     // for the currently latest version.
-    classpath 'com.lightbend.akka.grpc:akka-grpc-gradle-plugin:$akka_grpc_version$'
+    //classpath 'com.lightbend.akka.grpc:akka-grpc-gradle-plugin:$akka_grpc_version$'
+    // TODO remove when Akka gRPC 1.0.0 is final
+    classpath 'com.lightbend.akka.grpc:akka-grpc-gradle-plugin:1.0.0-M1+37-732f2dee'
   }
 }
 
@@ -21,6 +27,10 @@ apply plugin: 'com.lightbend.akka.grpc.gradle'
 repositories {
   mavenCentral()
   mavenLocal()
+  // TODO remove when Akka gRPC 1.0.0 is final
+  maven {
+    url "https://dl.bintray.com/akka/snapshots/"
+  }
 }
 
 akkaGrpc {
@@ -35,15 +45,14 @@ configurations {
 }
 
 dependencies {
-  compile 'com.typesafe.akka:akka-actor-typed_$scala_major_version$:$akka_version$'
-  compile 'com.typesafe.akka:akka-stream_$scala_major_version$:$akka_version$'
-  compile 'com.typesafe.akka:akka-discovery_$scala_major_version$:$akka_version$'
-  compile 'com.typesafe.akka:akka-protobuf_$scala_major_version$:$akka_version$'
+  implementation 'com.typesafe.akka:akka-actor-typed_$scala_major_version$:$akka_version$'
+  implementation 'com.typesafe.akka:akka-stream_$scala_major_version$:$akka_version$'
+  implementation 'com.typesafe.akka:akka-discovery_$scala_major_version$:$akka_version$'
+  implementation 'com.typesafe.akka:akka-protobuf_$scala_major_version$:$akka_version$'
 
-  testCompile 'junit:junit:4.12'
+  testImplementation 'junit:junit:4.13'
   testImplementation 'com.typesafe.akka:akka-actor-testkit-typed_$scala_major_version$:$akka_version$'
   testImplementation 'com.typesafe.akka:akka-stream-testkit_$scala_major_version$:$akka_version$'
-  testRuntime 'org.pegdown:pegdown:1.1.0'
 
   // Configuration for modules that use Jetty ALPN agent
   alpnagent 'org.mortbay.jetty.alpn:jetty-alpn-agent:$jetty_alpn_agent_version$'
