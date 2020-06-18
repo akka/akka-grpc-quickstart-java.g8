@@ -8,46 +8,23 @@
   <artifactId>$name$</artifactId>
   <version>0.1-SNAPSHOT</version>
 
-  <repositories>
-    <repository>
-      <id>bintray-akka-maven</id>
-      <name>bintray</name>
-      <url>https://dl.bintray.com/akka/maven</url>
-    </repository>
-    <!-- TODO remove when Akka gRPC 1.0.0 is final -->
-    <repository>
-      <id>bintray-akka-snapshots</id>
-      <name>bintray</name>
-      <url>https://dl.bintray.com/akka/snapshots</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>bintray-akka-maven</id>
-      <name>bintray</name>
-      <url>https://dl.bintray.com/akka/maven</url>
-    </pluginRepository>
-    <!-- TODO remove when Akka gRPC 1.0.0 is final -->
-    <pluginRepository>
-      <id>bintray-akka-snapshots</id>
-      <name>bintray</name>
-      <url>https://dl.bintray.com/akka/snapshots</url>
-    </pluginRepository>
-  </pluginRepositories>
-
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <akka.version>$akka_version$</akka.version>
-    <akka.grpc.version>1.0.0-M1+35-c8aa943b</akka.grpc.version>
-<!--    <akka.grpc.version>$akka_grpc_version$</akka.grpc.version>-->
-    <scala.binary.version>2.13</scala.binary.version>
+    <akka.grpc.version>$akka_grpc_version$</akka.grpc.version>
+    <scala.binary.version>$scala_major_version$</scala.binary.version>
     <grpc.version>1.28.1</grpc.version>
     <project.encoding>UTF-8</project.encoding>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-discovery_\${scala.binary.version}</artifactId>
+      <version>\${akka.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>com.lightbend.akka.grpc</groupId>
       <artifactId>akka-grpc-runtime_\${scala.binary.version}</artifactId>
@@ -68,7 +45,7 @@
 
     <dependency>
       <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-discovery_\${scala.binary.version}</artifactId>
+      <artifactId>akka-pki_\${scala.binary.version}</artifactId>
       <version>\${akka.version}</version>
     </dependency>
 
