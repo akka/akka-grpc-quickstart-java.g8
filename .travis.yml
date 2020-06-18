@@ -1,7 +1,7 @@
 version: ~> 1.0
 language: scala
 scala:
-  - 2.13.2
+  - 2.13.1
 
 before_install: curl -Ls https://git.io/jabba | bash && . ~/.jabba/jabba.sh
 install: jabba install "$TRAVIS_JDK" && jabba use "$_" && java -Xmx32m -version
