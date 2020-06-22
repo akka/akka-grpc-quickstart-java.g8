@@ -8,38 +8,52 @@
   <artifactId>$name$</artifactId>
   <version>0.1-SNAPSHOT</version>
 
-  <repositories>
-    <repository>
-      <id>bintray-akka-maven</id>
-      <name>bintray</name>
-      <url>https://dl.bintray.com/akka/maven</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>bintray-akka-maven</id>
-      <name>bintray</name>
-      <url>https://dl.bintray.com/akka/maven</url>
-    </pluginRepository>
-  </pluginRepositories>
-
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <akka.version>$akka_version$</akka.version>
     <akka.grpc.version>$akka_grpc_version$</akka.grpc.version>
     <scala.binary.version>$scala_major_version$</scala.binary.version>
-    <jetty.alpn.agent.version>$jetty_alpn_agent_version$</jetty.alpn.agent.version>
     <grpc.version>1.28.1</grpc.version>
     <project.encoding>UTF-8</project.encoding>
   </properties>
 
   <dependencies>
     <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-discovery_\${scala.binary.version}</artifactId>
+      <version>\${akka.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.lightbend.akka.grpc</groupId>
       <artifactId>akka-grpc-runtime_\${scala.binary.version}</artifactId>
       <version>\${akka.grpc.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-actor-typed_\${scala.binary.version}</artifactId>
+      <version>\${akka.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-stream_\${scala.binary.version}</artifactId>
+      <version>\${akka.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-pki_\${scala.binary.version}</artifactId>
+      <version>\${akka.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-actor-testkit-typed_\${scala.binary.version}</artifactId>
+      <version>\${akka.version}</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -52,7 +66,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>4.13</version>
       <scope>test</scope>
     </dependency>
 
@@ -63,29 +77,9 @@
       <version>\${grpc.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.mortbay.jetty.alpn</groupId>
-      <artifactId>jetty-alpn-agent</artifactId>
-      <version>\${jetty.alpn.agent.version}</version>
-      <scope>runtime</scope>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>net.alchim31.maven</groupId>
-        <artifactId>scala-maven-plugin</artifactId>
-        <version>3.4.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-              <goal>testCompile</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
       <plugin>
         <groupId>com.lightbend.akka.grpc</groupId>
         <artifactId>akka-grpc-maven-plugin</artifactId>
@@ -105,9 +99,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.7</version>
-        <configuration>
-          <argLine>-javaagent:\${org.mortbay.jetty.alpn:jetty-alpn-agent:jar}</argLine>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -137,7 +128,6 @@
             <configuration>
               <executable>java</executable>
               <arguments>
-                <argument>-javaagent:\${org.mortbay.jetty.alpn:jetty-alpn-agent:jar}</argument>
                 <argument>-classpath</argument>
                 <classpath />
                 <argument>com.example.helloworld.GreeterServer</argument>

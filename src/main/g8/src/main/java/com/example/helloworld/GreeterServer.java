@@ -2,13 +2,14 @@ package com.example.helloworld;
 
 //#import
 
-import akka.actor.ActorSystem;
+import akka.actor.typed.ActorSystem;
+import akka.actor.typed.javadsl.Adapter;
+import akka.actor.typed.javadsl.Behaviors;
 import akka.http.javadsl.*;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.japi.Function;
-import akka.stream.ActorMaterializer;
-import akka.stream.Materializer;
+import akka.stream.SystemMaterializer;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -37,31 +38,30 @@ public class GreeterServer {
     // important to enable HTTP/2 in ActorSystem's config
     Config conf = ConfigFactory.parseString("akka.http.server.preview.enable-http2 = on")
       .withFallback(ConfigFactory.load());
-    ActorSystem system = ActorSystem.create("HelloWorld", conf);
+    ActorSystem<Void> system = ActorSystem.create(Behaviors.empty(), "GreeterServer", conf);
     new GreeterServer(system).run();
   }
 
-  final ActorSystem system;
+  final ActorSystem<?> system;
 
-  public GreeterServer(ActorSystem system) {
+  public GreeterServer(ActorSystem<?> system) {
     this.system = system;
   }
 
   public CompletionStage<ServerBinding> run() throws Exception {
 
-    Materializer materializer = ActorMaterializer.create(system);
-
     Function<HttpRequest, CompletionStage<HttpResponse>> service =
         GreeterServiceHandlerFactory.create(
-            new GreeterServiceImpl(materializer),
+            new GreeterServiceImpl(system),
             system);
 
     CompletionStage<ServerBinding> bound =
-        Http.get(system).bindAndHandleAsync(
+        // Akka HTTP 10.1 requires adapters to accept the new actors APIs
+        Http.get(Adapter.toClassic(system)).bindAndHandleAsync(
           service,
           ConnectWithHttps.toHostHttps("127.0.0.1", 8080)
               .withCustomHttpsContext(serverHttpContext()),
-          materializer
+          SystemMaterializer.get(system).materializer()
         );
 
     bound.thenAccept(binding ->
@@ -105,7 +105,6 @@ public class GreeterServer {
   }
 
   private static String read(InputStream in) throws IOException {
-    // val bytes: Array[Byte] = {
     ByteArrayOutputStream baos = new ByteArrayOutputStream(Math.max(64, in.available()));
     byte[] buffer = new byte[32 * 1024];
 

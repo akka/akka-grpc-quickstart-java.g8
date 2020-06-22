@@ -4,10 +4,9 @@ package com.example.helloworld;
 import akka.Done;
 import akka.NotUsed;
 import akka.japi.Pair;
-import akka.stream.Materializer;
-import akka.actor.ActorSystem;
+import akka.actor.typed.ActorSystem;
+import akka.actor.typed.javadsl.Behaviors;
 import akka.grpc.GrpcClientSettings;
-import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Source;
 
 import java.time.Duration;
@@ -22,13 +21,11 @@ import static akka.NotUsed.notUsed;
 class GreeterClient {
 
   public static void main(String[] args) {
-    final ActorSystem sys = ActorSystem.create("HelloWorldClient");
-    final Materializer materializer = ActorMaterializer.create(sys);
+    final ActorSystem<Void> system = ActorSystem.create(Behaviors.empty(), "GreeterClient");
 
     GreeterServiceClient client = GreeterServiceClient.create(
-        GrpcClientSettings.fromConfig("helloworld.GreeterService", sys),
-        materializer,
-        sys.dispatcher()
+        GrpcClientSettings.fromConfig("helloworld.GreeterService", system),
+        system
     );
 
     final List<String> names;
@@ -74,7 +71,7 @@ class GreeterClient {
       CompletionStage<Done> done =
           responseStream.runForeach(reply ->
                   System.out.println(name + " got streaming reply: " + reply.getMessage()),
-              materializer);
+              system);
 
       done.whenComplete((reply, error) -> {
         if (error == null) {
