@@ -27,6 +27,7 @@ jobs:
       script: sbt new file://$PWD --name=hello-world-grpc --force && pushd hello-world-grpc &&  mvn test
       env: TRAVIS_JDK=adopt@1.11-0
 
+    ## Gradle builds will fail: https://github.com/akka/akka-grpc/issues/1034
     - name: "Gradle (JDK 8)"
       script: sbt new file://$PWD --name=hello-world-grpc --force && pushd hello-world-grpc &&  ./gradlew --console=plain build
       env: TRAVIS_JDK=adopt@1.8-0
