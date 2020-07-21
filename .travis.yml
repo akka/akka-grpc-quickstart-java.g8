@@ -51,3 +51,11 @@ cache:
     - $HOME/.gradle
     - $HOME/.jabba
     - $HOME/.m2/repository
+
+notifications:
+  email:
+    recipients:
+      - akka.official@gmail.com
+    on_success: never
+    on_failure: always
+    if: branch = master
