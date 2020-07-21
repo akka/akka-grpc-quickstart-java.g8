@@ -1,7 +1,7 @@
 plugins {
   id 'java'
   id 'application'
-  id "com.lightbend.akka.grpc.gradle" version "1.0.0"
+  id "com.lightbend.akka.grpc.gradle" version '$akka_grpc_version$'
 }
 
 repositories {
