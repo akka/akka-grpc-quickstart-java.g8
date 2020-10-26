@@ -24,6 +24,8 @@ This template will prompt for the name of the project. Press `Enter` if the defa
 Once inside the project folder, follow the [Akka gRPC Quickstart with Java guide](https://developer.lightbend.com/guides/akka-grpc-quickstart-java/) run both the server and the client and also to learn more about how this Hello World project works.
 
 
+test
+
 ## Template license
 
 Written in 2018 by Lightbend, Inc.
