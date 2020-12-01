@@ -69,4 +69,4 @@ notifications:
       - akka.official@gmail.com
     on_success: never
     on_failure: always
-    if: branch = master
+    if: (branch = master OR branch = main)
