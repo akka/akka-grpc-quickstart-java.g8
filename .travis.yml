@@ -46,9 +46,9 @@ jobs:
       env: TRAVIS_JDK=adopt@1.11-0
 
 stages:
-  - name: check
   - name: drop-travis-caches
     if: env(RUN_DROP_TRAVIS_CACHES_STAGE) = true
+  - name: check  
 
 before_cache:
   - find $HOME/.ivy2 -name "ivydata-*.properties" -print -delete
