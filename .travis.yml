@@ -9,6 +9,7 @@ install: jabba install "$TRAVIS_JDK" && jabba use "$_" && java -Xmx32m -version
 jobs:
   include:
     - stage: drop-travis-caches
+      name: "drop jdk8 cache"
       script:
         - rm -rf $HOME/.m2
         - rm -rf $HOME/.ivy2/cache
@@ -18,6 +19,16 @@ jobs:
         - rm -rf $HOME/.jabba
         - rm -rf $HOME/.gradle
       env: TRAVIS_JDK=adopt@1.8-0
+    - name: "drop jdk11 cache"
+      script:
+        - rm -rf $HOME/.m2
+        - rm -rf $HOME/.ivy2/cache
+        - rm -rf $HOME/.sbt/boot
+        - rm -rf $HOME/.sbt/launchers
+        - rm -rf $HOME/.cache/coursier
+        - rm -rf $HOME/.jabba
+        - rm -rf $HOME/.gradle
+      env: TRAVIS_JDK=adopt@1.11-0
     - stage: check
       name: "sbt & Paradox (JDK 8)"
       script: sbt test docs/paradox
