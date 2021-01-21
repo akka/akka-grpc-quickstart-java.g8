@@ -20,6 +20,8 @@ dependencies {
   implementation 'com.typesafe.akka:akka-stream_2.12:$akka_version$'
   implementation 'com.typesafe.akka:akka-pki_2.12:$akka_version$'
 
+  implementation 'ch.qos.logback:logback-classic:1.2.3'
+
   testImplementation 'com.typesafe.akka:akka-actor-testkit-typed_2.12:$akka_version$'
   testImplementation 'com.typesafe.akka:akka-stream-testkit_2.12:$akka_version$'
   testImplementation 'junit:junit:4.13'
