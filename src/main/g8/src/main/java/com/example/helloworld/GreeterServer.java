@@ -3,13 +3,11 @@ package com.example.helloworld;
 //#import
 
 import akka.actor.typed.ActorSystem;
-import akka.actor.typed.javadsl.Adapter;
 import akka.actor.typed.javadsl.Behaviors;
 import akka.http.javadsl.*;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
-import akka.japi.Function;
-import akka.stream.SystemMaterializer;
+import akka.japi.function.Function;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -27,7 +25,6 @@ import java.security.cert.CertificateFactory;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 import java.util.concurrent.CompletionStage;
-
 
 //#import
 
@@ -56,13 +53,10 @@ public class GreeterServer {
             system);
 
     CompletionStage<ServerBinding> bound =
-        // Akka HTTP 10.1 requires adapters to accept the new actors APIs
-        Http.get(Adapter.toClassic(system)).bindAndHandleAsync(
-          service,
-          ConnectWithHttps.toHostHttps("127.0.0.1", 8080)
-              .withCustomHttpsContext(serverHttpContext()),
-          SystemMaterializer.get(system).materializer()
-        );
+            Http.get(system)
+                    .newServerAt("127.0.0.1", 8080)
+                    .enableHttps(serverHttpContext())
+                    .bind(service);
 
     bound.thenAccept(binding ->
         System.out.println("gRPC server bound to: " + binding.localAddress())
