@@ -42,7 +42,7 @@ jobs:
 
     - name: "sbt & Paradox (JDK 11)"
       script: sbt test docs/paradox
-      env: TRAVIS_JDK=adoptopenjdk-11-hotspot0
+      env: TRAVIS_JDK=adoptopenjdk-11-hotspot
 
     - name: "Maven (JDK 8)"
       ## set name to "hello-world-grpc" and accept all other defaults (--force)
@@ -52,7 +52,7 @@ jobs:
     - name: "Maven (JDK 11)"
       ## set name to "hello-world-grpc" and accept all other defaults (--force)
       script: sbt new file://$PWD --name=hello-world-grpc --force && pushd hello-world-grpc &&  mvn test
-      env: TRAVIS_JDK=adoptopenjdk-11-hotspot0
+      env: TRAVIS_JDK=adoptopenjdk-11-hotspot
 
     ## Gradle builds will fail: https://github.com/akka/akka-grpc/issues/1034
     - name: "Gradle (JDK 8)"
@@ -61,7 +61,7 @@ jobs:
 
     - name: "Gradle (JDK 11)"
       script: sbt new file://$PWD --name=hello-world-grpc --force && pushd hello-world-grpc &&  ./gradlew --console=plain build
-      env: TRAVIS_JDK=adoptopenjdk-11-hotspot0
+      env: TRAVIS_JDK=adoptopenjdk-11-hotspot
 
 stages:
   - name: drop-travis-caches
