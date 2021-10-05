@@ -3,8 +3,25 @@ language: scala
 scala:
   - 2.13.1
 
-before_install: curl -Ls https://git.io/jabba | bash && . ~/.jabba/jabba.sh
-install: jabba install "$TRAVIS_JDK" && jabba use "$_" && java -Xmx32m -version
+addons:
+  apt:
+    sources:
+      # Official debian package for AdoptOpenJDK from https://adoptopenjdk.net/installation.html#linux-pkg
+      - sourceline: deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ xenial main
+        key_url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+    packages:
+      - adoptopenjdk-11-hotspot
+      - adoptopenjdk-8-hotspot
+
+before_install: 
+  - whereis java
+  - export JAVA_HOME=/usr/lib/jvm/$TRAVIS_JDK-amd64
+  - export PATH=/usr/lib/jvm/$TRAVIS_JDK-amd64/bin:$PATH
+  - java -version
+  # Initialize launcher from the correct URL so that later sbt runs work out of the box.
+  # Travis' default sbt launch script refers to `repo.scala-sbt.org` for downloading the launcher
+  # which currently doesn't work any more
+  - sbt -sbt-launch-repo https://repo1.maven.org/maven2 exit
 
 jobs:
   include:
@@ -72,7 +89,6 @@ cache:
     - $HOME/.ivy2/cache
     - $HOME/.sbt/boot
     - $HOME/.gradle
-    - $HOME/.jabba
     - $HOME/.m2/repository
 
 notifications:
