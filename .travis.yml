@@ -3,13 +3,30 @@ language: scala
 scala:
   - 2.13.1
 
-before_install: curl -Ls https://git.io/jabba | bash && . ~/.jabba/jabba.sh
-install: jabba install "$TRAVIS_JDK" && jabba use "$_" && java -Xmx32m -version
+addons:
+  apt:
+    sources:
+      # Official debian package for AdoptOpenJDK from https://adoptopenjdk.net/installation.html#linux-pkg
+      - sourceline: deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ xenial main
+        key_url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+    packages:
+      - adoptopenjdk-11-hotspot
+      - adoptopenjdk-8-hotspot
+
+before_install: 
+  - whereis java
+  - export JAVA_HOME=/usr/lib/jvm/$TRAVIS_JDK-amd64
+  - export PATH=/usr/lib/jvm/$TRAVIS_JDK-amd64/bin:$PATH
+  - java -version
+  # Initialize launcher from the correct URL so that later sbt runs work out of the box.
+  # Travis' default sbt launch script refers to `repo.scala-sbt.org` for downloading the launcher
+  # which currently doesn't work any more
+  - sbt -sbt-launch-repo https://repo1.maven.org/maven2 exit
 
 jobs:
   include:
     - stage: drop-travis-caches
-      name: "drop jdk8 cache"
+      name: "drop cache"
       script:
         - rm -rf $HOME/.m2
         - rm -rf $HOME/.ivy2/cache
@@ -18,44 +35,33 @@ jobs:
         - rm -rf $HOME/.cache/coursier
         - rm -rf $HOME/.jabba
         - rm -rf $HOME/.gradle
-      env: TRAVIS_JDK=adopt@1.8-0
-    - name: "drop jdk11 cache"
-      script:
-        - rm -rf $HOME/.m2
-        - rm -rf $HOME/.ivy2/cache
-        - rm -rf $HOME/.sbt/boot
-        - rm -rf $HOME/.sbt/launchers
-        - rm -rf $HOME/.cache/coursier
-        - rm -rf $HOME/.jabba
-        - rm -rf $HOME/.gradle
-      env: TRAVIS_JDK=adopt@1.11-0
     - stage: check
       name: "sbt & Paradox (JDK 8)"
       script: sbt test docs/paradox
-      env: TRAVIS_JDK=adopt@1.8-0
+      env: TRAVIS_JDK=adoptopenjdk-8-hotspot
 
     - name: "sbt & Paradox (JDK 11)"
       script: sbt test docs/paradox
-      env: TRAVIS_JDK=adopt@1.11-0
+      env: TRAVIS_JDK=adoptopenjdk-11-hotspot
 
     - name: "Maven (JDK 8)"
       ## set name to "hello-world-grpc" and accept all other defaults (--force)
       script: sbt new file://$PWD --name=hello-world-grpc --force && pushd hello-world-grpc &&  mvn test
-      env: TRAVIS_JDK=adopt@1.8-0
+      env: TRAVIS_JDK=adoptopenjdk-8-hotspot
 
     - name: "Maven (JDK 11)"
       ## set name to "hello-world-grpc" and accept all other defaults (--force)
       script: sbt new file://$PWD --name=hello-world-grpc --force && pushd hello-world-grpc &&  mvn test
-      env: TRAVIS_JDK=adopt@1.11-0
+      env: TRAVIS_JDK=adoptopenjdk-11-hotspot
 
     ## Gradle builds will fail: https://github.com/akka/akka-grpc/issues/1034
     - name: "Gradle (JDK 8)"
       script: sbt new file://$PWD --name=hello-world-grpc --force && pushd hello-world-grpc &&  ./gradlew --console=plain build
-      env: TRAVIS_JDK=adopt@1.8-0
+      env: TRAVIS_JDK=adoptopenjdk-8-hotspot
 
     - name: "Gradle (JDK 11)"
       script: sbt new file://$PWD --name=hello-world-grpc --force && pushd hello-world-grpc &&  ./gradlew --console=plain build
-      env: TRAVIS_JDK=adopt@1.11-0
+      env: TRAVIS_JDK=adoptopenjdk-11-hotspot
 
 stages:
   - name: drop-travis-caches
@@ -72,7 +78,6 @@ cache:
     - $HOME/.ivy2/cache
     - $HOME/.sbt/boot
     - $HOME/.gradle
-    - $HOME/.jabba
     - $HOME/.m2/repository
 
 notifications:
