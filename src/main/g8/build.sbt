@@ -10,6 +10,12 @@ enablePlugins(AkkaGrpcPlugin)
 
 akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java)
 
+// Run in a separate JVM, to make sure sbt waits until all threads have
+// finished before returning.
+// If you want to keep the application running while executing other
+// sbt tasks, consider https://github.com/spray/sbt-revolver/
+fork := true
+
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
   "com.typesafe.akka" %% "akka-http2-support" % akkaHttpVersion,
