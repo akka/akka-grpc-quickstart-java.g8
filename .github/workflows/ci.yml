@@ -10,7 +10,7 @@ on:
 
 jobs:
   check:
-    name: JDK ${{ matrix.jdkVersion }}
+    name: JDK ${{ matrix.jvm }}
     if: github.repository == 'akka/akka-grpc-quickstart-java.g8'
     runs-on: ubuntu-20.04
 
@@ -25,10 +25,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up JDK ${matrix.jvm}
+      - name: Set up JDK ${{ matrix.jvm }}
         uses: coursier/setup-action@v1.1.2
         with:
-          jvm: ${matrix.jvm}
+          jvm: ${{ matrix.jvm }}
 
       - name: Cache Coursier cache
         uses: coursier/cache-action@v6.3
@@ -50,8 +50,8 @@ jobs:
         with:
           server_address: smtp.gmail.com
           server_port: 465
-          username: ${{secrets.MAIL_USERNAME}}
-          password: ${{secrets.MAIL_PASSWORD}}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
           subject: "Failed: ${{ github.workflow }} / ${{ github.job }}"
           to: akka.official@gmail.com
           from: Akka CI (GHActions)
