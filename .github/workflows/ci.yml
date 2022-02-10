@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  sbt:
+    name: sbt
+    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { jvm: "adopt:8" }
+          - { jvm: "adopt:11" }
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK ${matrix.jvm}
+        uses: coursier/setup-action@v1.1.2
+        with:
+          jvm: ${matrix.jvm}
+
+      - name: Cache Coursier cache
+        uses: coursier/cache-action@v6.3
+
+      - name: sbt & Paradox (${matrix.jvm})
+        run: sbt test docs/paradox
+
+  maven:
+    name: Maven
+    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { jvm: "adopt:8" }
+          - { jvm: "adopt:11" }
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK ${matrix.jvm}
+        uses: coursier/setup-action@v1.1.2
+        with:
+          jvm: ${matrix.jvm}
+
+      - name: Cache Coursier cache
+        uses: coursier/cache-action@v6.3
+
+      - name: Maven (${matrix.jvm})
+        run: |-
+          sbt new file://$PWD --name=hello-world-grpc --force
+          pushd hello-world-grpc
+          mvn test
+
+  gradle:
+    name: Gradle
+    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { jvm: "adopt:8" }
+          - { jvm: "adopt:11" }
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK ${matrix.jvm}
+        uses: coursier/setup-action@v1.1.2
+        with:
+          jvm: ${matrix.jvm}
+
+      - name: Cache Coursier cache
+        uses: coursier/cache-action@v6.3
+
+      - name: Maven (${matrix.jvm})
+        run: |-
+          sbt new file://$PWD --name=hello-world-grpc --force
+          pushd hello-world-grpc
+          ./gradlew --console=plain build
