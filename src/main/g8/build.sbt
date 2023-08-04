@@ -16,6 +16,8 @@ akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java)
 // sbt tasks, consider https://github.com/spray/sbt-revolver/
 fork := true
 
+resolvers += "Akka library repository".at("https://repo.akka.io/maven")
+
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
   "com.typesafe.akka" %% "akka-http2-support" % akkaHttpVersion,
