@@ -95,7 +95,7 @@ public class GreeterServer {
     SSLContext context = SSLContext.getInstance("TLS");
     context.init(keyManagerFactory.getKeyManagers(), null, new SecureRandom());
 
-    return ConnectionContext.https(context);
+    return ConnectionContext.httpsServer(context);
   }
 
   private static String read(InputStream in) throws IOException {
