@@ -1,12 +1,20 @@
+buildscript {
+  repositories {
+    mavenLocal()
+    gradlePluginPortal()
+    maven {
+      url "https://repo.akka.io/maven"
+    }
+  }
+}
 plugins {
   id 'java'
   id 'application'
-  id "com.lightbend.akka.grpc.gradle" version '$akka_grpc_version$'
+  id 'com.lightbend.akka.grpc.gradle'
 }
-
 repositories {
-  mavenCentral()
   mavenLocal()
+  mavenCentral()
   maven {
     url "https://repo.akka.io/maven"
   }
@@ -48,4 +56,12 @@ task runClient(type: JavaExec) {
 
 application {
   mainClassName = 'com.example.helloworld.GreeterServer'
+}
+
+allprojects {
+  apply plugin: 'java'
+
+  tasks.withType(Copy).all {
+    duplicatesStrategy 'exclude'
+  }
 }
