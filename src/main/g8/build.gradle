@@ -1,6 +1,5 @@
 buildscript {
   repositories {
-    mavenLocal()
     gradlePluginPortal()
     maven {
       url "https://repo.akka.io/maven"
@@ -13,7 +12,6 @@ plugins {
   id 'com.lightbend.akka.grpc.gradle'
 }
 repositories {
-  mavenLocal()
   mavenCentral()
   maven {
     url "https://repo.akka.io/maven"
