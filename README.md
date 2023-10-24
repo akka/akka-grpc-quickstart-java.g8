@@ -11,7 +11,7 @@ The Hello World example illustrates Akka gRPC basics. Within 30 minutes, you sho
 It can also be used as a [Giter8][g8] template for Akka with Scala.
 
 Prerequisites:
-- JDK 11
+- JDK 17
 - [sbt][sbt] 1.4.x or higher ([download here][sbt_download])
 
 Open a console and run the following command to apply this template:
