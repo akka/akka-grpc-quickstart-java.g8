@@ -1,11 +1,3 @@
-buildscript {
-  repositories {
-    gradlePluginPortal()
-    maven {
-      url "https://repo.akka.io/maven"
-    }
-  }
-}
 plugins {
   id 'java'
   id 'application'
