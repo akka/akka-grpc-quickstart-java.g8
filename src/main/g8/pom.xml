@@ -12,7 +12,6 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <akka.version>$akka_version$</akka.version>
-    <akka.http.version>$akka_http_version$</akka.http.version>
     <akka.grpc.version>$akka_grpc_version$</akka.grpc.version>
     <scala.binary.version>$scala_major_version$</scala.binary.version>
     <grpc.version>1.58.0</grpc.version>
@@ -35,12 +34,6 @@
   </pluginRepositories>
 
   <dependencies>
-    <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-http_\${scala.binary.version}</artifactId>
-      <version>\${akka.http.version}</version>
-    </dependency>
-
 
     <dependency>
       <groupId>com.typesafe.akka</groupId>
