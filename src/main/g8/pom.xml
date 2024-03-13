@@ -14,7 +14,7 @@
     <akka.version>$akka_version$</akka.version>
     <akka.grpc.version>$akka_grpc_version$</akka.grpc.version>
     <scala.binary.version>$scala_major_version$</scala.binary.version>
-    <grpc.version>1.58.0</grpc.version>
+    <grpc.version>1.60.2</grpc.version>
     <project.encoding>UTF-8</project.encoding>
   </properties>
 
